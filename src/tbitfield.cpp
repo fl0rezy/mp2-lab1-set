@@ -150,17 +150,14 @@ TBitField TBitField::operator|(const TBitField& bf)// операция "или"
 
 TBitField TBitField::operator&(const TBitField& bf) // операция "и"
 {
-    int max_len = (BitLen > bf.BitLen) ? BitLen : bf.BitLen;
-    TBitField res(max_len);
+    int min_len = (BitLen < bf.BitLen) ? BitLen : bf.BitLen;
+    TBitField res(min_len);
 
-    for (int i = 0; i < max_len; i++) {
-        int bit1 = (i < BitLen) ? GetBit(i) : 0;
-        int bit2 = (i < bf.BitLen) ? bf.GetBit(i) : 0;
-        if (bit1 && bit2) {
+    for (int i = 0; i < min_len; i++) {
+        if (GetBit(i) && bf.GetBit(i)) {
             res.SetBit(i);
         }
     }
-
     return res;
 }
 
